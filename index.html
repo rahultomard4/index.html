@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apna Gaon Mart - 30 Minute Delivery</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background-color: #f4f6f8; color: #333; }
+        header { background-color: #1e88e5; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 100; }
+        .tagline { font-size: 14px; background: #1565c0; padding: 5px; color: #ffeb3b; }
+        .container { padding: 15px; max-width: 600px; margin: auto; }
+        h2 { margin: 15px 0 10px 0; font-size: 18px; color: #1565c0; border-left: 4px solid #1e88e5; padding-left: 8px; }
+        
+        /* Product Card Design */
+        .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .product-card { background: white; padding: 10px; border-radius: 8px; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .product-img { width: 80px; height: 80px; object-fit: cover; margin-bottom: 8px; }
+        .p-name { font-weight: bold; font-size: 15px; margin-bottom: 4px; }
+        .p-price { color: #e53935; font-weight: bold; margin-bottom: 8px; }
+        .add-btn { background: #4caf50; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; }
+        
+        /* Floating Cart Button */
+        .cart-float { position: fixed; bottom: 20px; right: 20px; background: #25d366; color: white; padding: 15px 20px; border-radius: 50px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.3); border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Apna Gaon Mart</h1>
+    <div class="tagline">🏍️ Aapke Gaon Mein Sabse Tez Delivery (30-60 Min)</div>
+</header>
+
+<div class="container">
+    <h2>Daily Essentials (रोजाना का सामान)</h2>
+    <div class="product-grid">
+        <!-- Product 1 -->
+        <div class="product-card">
+            <img class="product-img" src="https://cdn-icons-png.flaticon.com/512/372/372979.png" alt="Milk">
+            <div class="p-name">Taza Doodh (1 Litre)</div>
+            <div class="p-price">₹60</div>
+            <button class="add-btn" onclick="addToCart('Taza Doodh', 60)">+ Add to Cart</button>
+        </div>
+        <!-- Product 2 -->
+        <div class="product-card">
+            <img class="product-img" src="https://cdn-icons-png.flaticon.com/512/3076/3076134.png" alt="Bread">
+            <div class="p-name">Bread Packet</div>
+            <div class="p-price">₹30</div>
+            <button class="add-btn" onclick="addToCart('Bread Packet', 30)">+ Add to Cart</button>
+        </div>
+    </div>
+
+    <h2>Kirana & Rashan (किराना सामान)</h2>
+    <div class="product-grid">
+        <!-- Product 3 -->
+        <div class="product-card">
+            <img class="product-img" src="https://cdn-icons-png.flaticon.com/512/2503/2503902.png" alt="Sugar">
+            <div class="p-name">Cheeni / Sugar (1kg)</div>
+            <div class="p-price">₹45</div>
+            <button class="add-btn" onclick="addToCart('Cheeni (1kg)', 45)">+ Add to Cart</button>
+        </div>
+        <!-- Product 4 -->
+        <div class="product-card">
+            <img class="product-img" src="https://cdn-icons-png.flaticon.com/512/933/933267.png" alt="Oil">
+            <div class="p-name">Sarso Tel (1 Litre)</div>
+            <div class="p-price">₹170</div>
+            <button class="add-btn" onclick="addToCart('Sarso Tel (1L)', 170)">+ Add to Cart</button>
+        </div>
+    </div>
+</div>
+
+<!-- Floating WhatsApp Cart Button -->
+<button class="cart-float" onclick="sendOrder()">
+    💬 Order On WhatsApp (<span id="cart-count">0</span>)
+</button>
+
+<script>
+    let cart = [];
+
+    function addToCart(name, price) {
+        cart.push({name: name, price: price});
+        document.getElementById('cart-count').innerText = cart.length;
+        alert(name + " cart mein jod diya gaya hai!");
+    }
+
+    function sendOrder() {
+        if(cart.length === 0) {
+            alert("Pehle cart mein kuch saman jodein!");
+            return;
+        }
+        
+        let phoneNumber = "919999999999"; // <-- YAHAN APNA WHATSAPP NUMBER DALREIN
+        let text = "Naya Order Arrived!\n\n*Saman ki list:*\n";
+        let total = 0;
+        
+        cart.forEach((item, index) => {
+            text += `${index + 1}. ${item.name} - ₹${item.price}\n`;
+            total += item.price;
+        });
+        
+        text += `\n*Total Amount:* ₹${total}\n\n*Kripya apna Naam aur Gaon ka pata likh kar bhejein.*`;
+        
+        let whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
+        window.open(whatsappUrl, '_blank');
+    }
+</script>
+
+</body>
+</html>
